@@ -1,0 +1,108 @@
+In this flow, a user logs in or registers, views their personal library, retrieves the details
+of one or more books, adds a new book, retrieves the details of that book, updates it, and
+eventually deletes it from their library.
+
+The application uses JWT authentication with role-based access control,
+nested GraphQL types (e.g. BookType nested inside BookWithPersonalDataType),
+and supports pagination and partial updates.
+
+Scheme:
+
+mutation loginUser{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation registerUser{
+  register(input:{
+    name: "Mihai Telu",
+    password: "password",
+    email: "telum@gmail.com",
+    age: 20,
+    country: "Romania",
+    bio: "I read sometimes on the train. I like classical books."
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+query getPersonalLibrary{
+  personalLibrary(page: 2, nrBooksOnPage:4){
+    nrOfBooks,
+    books{
+      id,
+      title,
+      author
+    }
+  }
+}
+
+query getBookFromLibrary{
+  book(bookId: 195){
+    book{
+      id,
+      title,
+      author
+    }
+    status,
+    currentPage,
+    rating,
+    visibility
+  }
+}
+
+mutation addBook{
+  createBook(input:{
+    title: "Ion",
+    author: "Liviu Rebreanu"
+  })
+  {
+    id,
+    title,
+    author
+  }
+}
+
+mutation updateBookFromLibrary{
+  updateBook(input:{
+      bookId: 251,
+      status: "read",
+      currentPage:200,
+      visibility: "public"
+  })
+}
+
+query getBookFromLibrary2{
+  book(bookId: 251){
+    book{
+      id,
+      title,
+      author
+    }
+    status,
+    currentPage,
+    rating,
+    visibility
+  }
+}
+
+mutation deleteBookFromLibrary{
+  deleteBook(bookId: 251)
+}
+
