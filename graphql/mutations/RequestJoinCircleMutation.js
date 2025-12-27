@@ -3,8 +3,8 @@ const CircleMemberType = require("../types/CircleMemberType")
 const { GraphQLError } = require("graphql")
 const db = require("../../models")
 const {
-  ensureNotAlreadyMemberOrPending,
-} = require("../../services/circleService")
+  notAlreadyMemberOrPending,
+} = require("../../services/ReadingCircleService")
 
 const requestJoinCircle = {
   type: CircleMemberType,
@@ -15,10 +15,7 @@ const requestJoinCircle = {
     const circle = await db.ReadingCircle.findByPk(input.circleId)
     if (!circle) throw new GraphQLError("CIRCLE_NOT_FOUND")
 
-    const exists = await ensureNotAlreadyMemberOrPending(
-      user.id,
-      input.circleId
-    )
+    const exists = await notAlreadyMemberOrPending(user.id, input.circleId)
     if (exists) throw new GraphQLError("ALREADY_MEMBER_OR_PENDING")
 
     const membership = await db.CircleMember.create({

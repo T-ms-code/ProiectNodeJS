@@ -3,6 +3,7 @@ const {
 } = require ('graphql');
 const PersonalLibrary = require('../queries/PersonalLibraryQuery');
 const bookQuery = require('../queries/BookQuery');
+const pendingRequests = require('../queries/PendingRequests');
 
 
 const QueryType = new GraphQLObjectType({
@@ -10,6 +11,7 @@ const QueryType = new GraphQLObjectType({
     fields: {
         personalLibrary: PersonalLibrary,
         book: bookQuery,
+        pendingRequests: pendingRequests,
     },
 });
 

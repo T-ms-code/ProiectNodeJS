@@ -2,7 +2,7 @@ const RespondJoinInput = require("../InputTypes/RespondJoinInputType")
 const CircleMemberType = require("../types/CircleMemberType")
 const { GraphQLError } = require("graphql")
 const db = require("../../models")
-const { isCircleAdmin } = require("../../services/circleService")
+const { isCircleAdmin } = require("../../services/ReadingCircleService")
 
 const respondJoinRequest = {
   type: CircleMemberType,

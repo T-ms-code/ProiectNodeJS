@@ -1,4 +1,3 @@
-// ...existing code...
 const { GraphQLInputObjectType, GraphQLInt } = require("graphql")
 
 const RequestJoinInputType = new GraphQLInputObjectType({

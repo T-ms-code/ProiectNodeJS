@@ -1,7 +1,7 @@
 const { GraphQLError, GraphQLList, GraphQLInt } = require("graphql")
 const CircleMemberType = require("../types/CircleMemberType")
 const db = require("../../models")
-const { isCircleAdmin } = require("../../services/circleService")
+const { isCircleAdmin } = require("../../services/ReadingCircleService")
 
 const pendingRequests = {
   type: new GraphQLList(CircleMemberType),

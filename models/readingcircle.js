@@ -3,33 +3,36 @@ const { Model } = require("sequelize")
 module.exports = (sequelize, DataTypes) => {
   class ReadingCircle extends Model {
     static associate(models) {
-      // define association here
       ReadingCircle.belongsTo(models.User, {
-        as: "admin",
-        foreignKey: "adminId",
+        as: "owner",
+        foreignKey: "ownerId",
       })
-      ReadingCircle.hasMany(models.User, {
+
+      ReadingCircle.hasMany(models.CircleMember, {
+        as: "memberRecords",
+        foreignKey: "circleId",
+      })
+
+      ReadingCircle.belongsToMany(models.User, {
         through: models.CircleMember,
+        as: "members",
         foreignKey: "circleId",
         otherKey: "userId",
-        as: "members",
-      })
-      ReadingCircle.hasOne(models.Chat, {
-        foreignKey: "circleId",
-        as: "chat",
       })
     }
   }
+
   ReadingCircle.init(
     {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
-      adminId: DataTypes.STRING,
+      ownerId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "ReadingCircle",
     }
   )
+
   return ReadingCircle
 }
