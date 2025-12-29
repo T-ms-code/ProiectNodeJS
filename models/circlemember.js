@@ -1,34 +1,36 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict"
+const { Model } = require("sequelize")
+
 module.exports = (sequelize, DataTypes) => {
   class CircleMember extends Model {
     static associate(models) {
-      // define association here
-      CircleMember.hasMany(models.Message, { 
-        foreignKey: 'memberId' ,
-        as: 'messages'
-      });
+      CircleMember.belongsTo(models.User, { as: "user", foreignKey: "userId" })
+      CircleMember.belongsTo(models.ReadingCircle, {
+        as: "circle",
+        foreignKey: "circleId",
+      })
     }
   }
-  CircleMember.init({
-    userId: {
+
+  CircleMember.init(
+    {
+      id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      userId: DataTypes.INTEGER,
+      circleId: DataTypes.INTEGER,
+      circleRole: { type: DataTypes.STRING, defaultValue: "member" },
+      status: { type: DataTypes.STRING, defaultValue: "pending" },
+      requestedAt: DataTypes.DATE,
+      respondedAt: DataTypes.DATE,
     },
-    circleId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    circleRole: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'member'
-      }
-  }, {
-    sequelize,
-    modelName: 'CircleMember',
-  });
-  return CircleMember;
-};
+    {
+      sequelize,
+      modelName: "CircleMember",
+    }
+  )
+
+  return CircleMember
+}
