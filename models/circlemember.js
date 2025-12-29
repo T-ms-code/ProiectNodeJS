@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
 
   CircleMember.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       userId: DataTypes.INTEGER,
       circleId: DataTypes.INTEGER,
       circleRole: { type: DataTypes.STRING, defaultValue: "member" },

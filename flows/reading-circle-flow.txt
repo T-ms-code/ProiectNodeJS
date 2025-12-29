@@ -1,0 +1,137 @@
+In this flow, an user creates a reading circle, another user requests to join,
+and the circle owner reviews and responds to the join request.
+
+The application uses JWT authentication with role-based access control,
+reading circle ownership management, and join request handling with status tracking.
+
+Scheme:
+
+mutation loginOwner{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation createReadingCircle{
+  createReadingCircle(input:{
+    name: "Club SF",
+    description: "Fahrenheit 451 type shit"
+  }){
+    id,
+    name,
+    description,
+    owner {
+      id,
+      name,
+      email
+    }
+  }
+}
+
+mutation registerNewUser{
+  register(input:{
+    name: "John Doe",
+    password: "password123",
+    email: "john@example.com",
+    age: 25,
+    country: "Romania",
+    bio: "I love reading"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation requestJoinCircle{
+  requestJoinCircle(input:{
+    circleId: 21
+  }){
+    id,
+    status,
+    circleId,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt
+  }
+}
+
+mutation loginOwnerAgain{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+  }
+}
+
+query getPendingRequests{
+  pendingRequests(circleId: 21){
+    id,
+    status,
+    circleId,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt
+  }
+}
+
+mutation acceptJoinRequest{
+  respondJoinRequest(input:{
+    requestId: 1 (might be a different value),
+    action: "accept"
+  }){
+    id,
+    status,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt,
+    respondedAt
+  }
+}
+
+mutation rejectJoinRequest{
+  respondJoinRequest(input:{
+    requestId: 1 (might be a different value),
+    action: "reject"
+  }){
+    id,
+    status,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt,
+    respondedAt
+  }
+}
