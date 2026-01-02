@@ -3,7 +3,7 @@ const {GraphQLEnumType} = require('graphql');
 const AssignableReadingCircleRole = new GraphQLEnumType({
     name: "AssignableReadingCircleRole",
     values: {
-        COORDINATOR: { value: "coordinator" },
+        MODERATOR: { value: "moderator" },
         MEMBER: { value: "member"},
     }
 });

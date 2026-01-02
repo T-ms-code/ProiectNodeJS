@@ -1,3 +1,10 @@
+This flow showcases the roles at the reading circle level.
+The ADMIN can kick out members, change members' roles,
+edit circles's name and description and delete messages(TO BE IMPLEMENTED).
+
+The MODERATOR can edit circle's description and delete messages(TO BE IMPLEMENTED).
+
+
 mutation loginOwner{
   login(input:{
     name: "Mike Tyson",
@@ -139,7 +146,7 @@ mutation deleteReadingCircleMember{
 mutation changeMemberRole{
   updateReadingCircleMemberRole(
     memberId: 305,
-    role: COORDINATOR
+    role: MODERATOR
   )
 }
 

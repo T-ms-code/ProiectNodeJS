@@ -25,7 +25,7 @@ async function isCircleModerator(userId, circleId) {
   if (!circle) return false
 
   const membership = await db.CircleMember.findOne({
-    where: { circleId, userId, circleRole: "coordinator", status: "accepted" },
+    where: { circleId, userId, circleRole: "moderator", status: "accepted" },
   })
   return !!membership
 }
