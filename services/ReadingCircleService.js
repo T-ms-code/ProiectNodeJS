@@ -19,9 +19,27 @@ async function isCircleAdmin(userId, circleId) {
   return !!membership
 }
 
+
+async function isCircleModerator(userId, circleId) {
+  const circle = await db.ReadingCircle.findByPk(circleId)
+  if (!circle) return false
+
+  const membership = await db.CircleMember.findOne({
+    where: { circleId, userId, circleRole: "moderator", status: "accepted" },
+  })
+  return !!membership
+}
+
 async function notAlreadyMemberOrPending(userId, circleId) {
   const exists = await db.CircleMember.findOne({ where: { circleId, userId } })
   return !!exists
 }
 
-module.exports = { isCircleAdmin, notAlreadyMemberOrPending }
+async function isReadingCircleMember(userId, circleId){
+  const membership = await db.CircleMember.findOne(
+    { where: { circleId, userId, status: "accepted" } }
+  )
+  return !!membership
+}
+
+module.exports = { isCircleAdmin, isCircleModerator, notAlreadyMemberOrPending, isReadingCircleMember }

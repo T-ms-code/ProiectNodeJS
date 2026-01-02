@@ -9,6 +9,11 @@ const createReadingCircle = require("../mutations/CreateReadingCircleMutation")
 const requestJoinCircle = require("../mutations/RequestJoinCircleMutation")
 const respondJoinRequest = require("../mutations/RespondJoinRequestMutation")
 
+const deleteReadingCircleMember = require("../mutations/DeleteReadingCircleMemberMutation")
+const updateReadingCircleMemberRole = require("../mutations/UpdateReadingCircleMemberRoleMutation")
+
+const updateReadingCircle = require("../mutations/UpdateReadingCircleMutation");
+
 const MutationType = new GraphQLObjectType({
   name: "Mutation",
   fields: {
@@ -20,6 +25,9 @@ const MutationType = new GraphQLObjectType({
     createReadingCircle,
     requestJoinCircle,
     respondJoinRequest,
+    deleteReadingCircleMember,
+    updateReadingCircleMemberRole,
+    updateReadingCircle
   },
 })
 
