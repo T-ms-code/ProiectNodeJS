@@ -134,3 +134,11 @@ query showReadingCircleMembers{
 mutation deleteReadingCircleMember{
   deleteReadingCircleMember(memberId: 304)
 }
+
+
+mutation changeMemberRole{
+  updateReadingCircleMemberRole(
+    memberId: 305,
+    role: COORDINATOR
+  )
+}
