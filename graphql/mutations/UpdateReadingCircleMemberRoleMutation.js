@@ -1,10 +1,11 @@
-const {GraphQLInt, GraphQLBoolean} = require("graphql");
-const ReadingCircleRole = require("../types/AssignableReadingCircleRole")
+const {GraphQLInt, GraphQLError} = require("graphql");
+const ReadingCircleRole = require("../types/AssignableReadingCircleRole");
 const { isCircleAdmin } = require('../../services/ReadingCircleService');
-const db = require("../../models")
+const db = require("../../models");
+const CircleMemberType = require("../types/CircleMemberType");
 
 const updateReadingCircleMemberRole = {
-    type: GraphQLBoolean,
+    type: CircleMemberType,
     args: {
         memberId:{
             type: GraphQLInt
@@ -25,16 +26,10 @@ const updateReadingCircleMemberRole = {
 
         if(member.userId === user.id) throw new GraphQLError("Cannot change your role. You are the ADMIN!");
 
-        const [updatedCount] = await db.CircleMember.update(
-            {circleRole: role},
-            {where: {id: memberId}}
-        )
+        member.circleRole = role;
+        await member.save();
 
-        if (updatedCount === 0) {
-            throw new GraphQLError("ROLE_NOT_UPDATED");
-        }
-
-        return true;
+        return member;
     }
 }
 

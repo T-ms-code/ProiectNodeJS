@@ -147,7 +147,18 @@ mutation changeMemberRole{
   updateReadingCircleMemberRole(
     memberId: 305,
     role: MODERATOR
-  )
+  ){
+    id,
+    status,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt,
+    respondedAt
+  }
 }
 
 
@@ -159,6 +170,7 @@ query showMyCircles{
   }
 }
 
+
 mutation updateReadingCircle{
   updateReadingCircle(
     input:{
@@ -166,5 +178,9 @@ mutation updateReadingCircle{
       name: "A new name",
       description: "A new description"
     }
-  )
+  ){
+    id
+    name
+    description
+  }
 }

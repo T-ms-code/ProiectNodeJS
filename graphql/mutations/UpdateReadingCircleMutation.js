@@ -1,11 +1,12 @@
-const { GraphQLBoolean, GraphQLError } = require("graphql");
+const { GraphQLError } = require("graphql");
 const db = require("../../models");
 const UpdateReadingCircleInputType = require("../InputTypes/UpdateReadingCircleInputType");
+const ReadingCircleType = require("../types/ReadingCircleType");
 const { isCircleAdmin, isCircleModerator } = require("../../services/ReadingCircleService");
 
 
 const updateReadingCircle = {
-    type: GraphQLBoolean,
+    type: ReadingCircleType,
     args: {
         input: {
             type: UpdateReadingCircleInputType
@@ -40,12 +41,11 @@ const updateReadingCircle = {
         const isModerator = await isCircleModerator(user.id, circle.id);
         if (!(isModerator || isAdmin) && description) throw new GraphQLError("Only ADMIN or MODERATOR can update circle description");
 
-        await circle.update({
-            name: name || circle.name,
-            description: description || circle.description
-        });
+        circle.name = name || circle.name;
+        circle.description = description || circle.description;
+        await circle.save();
 
-        return true;
+        return circle
     }
 }
 
