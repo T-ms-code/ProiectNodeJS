@@ -1,8 +1,15 @@
-This flow showcases the roles at the reading circle level.
-The ADMIN can kick out members, change members' roles,
-edit circles's name and description and delete messages(TO BE IMPLEMENTED).
+This flow showcases role-based access control at the reading circle level.
 
-The MODERATOR can edit circle's description and delete messages(TO BE IMPLEMENTED).
+The ADMIN can:
+- remove members from the circle
+- change members' roles
+- edit the circle name and description
+- delete messages (to be implemented)
+
+The MODERATOR can:
+- edit the circle description
+- delete messages (to be implemented)
+
 
 
 mutation loginOwner{
