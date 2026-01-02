@@ -24,4 +24,11 @@ async function notAlreadyMemberOrPending(userId, circleId) {
   return !!exists
 }
 
-module.exports = { isCircleAdmin, notAlreadyMemberOrPending }
+async function isReadingCircleMember(userId, circleId){
+  const membership = await db.CircleMember.findOne(
+    { where: { circleId, userId, status: "accepted" } }
+  )
+  return !!membership
+}
+
+module.exports = { isCircleAdmin, notAlreadyMemberOrPending, isReadingCircleMember }

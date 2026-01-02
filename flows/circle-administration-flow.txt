@@ -1,0 +1,136 @@
+mutation loginOwner{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+
+mutation createReadingCircle{
+  createReadingCircle(input:{
+    name: "Club SF",
+    description: "Fahrenheit 451 type shit"
+  }){
+    id,
+    name,
+    description,
+    owner {
+      id,
+      name,
+      email
+    }
+  }
+}
+
+
+mutation registerUser{
+  register(input:{
+    name: "Laur",
+    password: "password",
+    email: "laur@gmail.com",
+    age: 20,
+    country: "Romania",
+    bio: "I read sometimes on the train. I like classical books."
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+
+mutation loginAnotherUser{
+  login(input:{
+    name: "Laur",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+
+mutation requestJoinCircle{
+  requestJoinCircle(input:{
+    circleId: 22
+  }){
+    id,
+    status,
+    circleId,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt
+  }
+}
+
+
+query getPendingRequests{
+  pendingRequests(circleId: 22){
+    id,
+    status,
+    circleId,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt
+  }
+}
+
+
+mutation acceptJoinRequest{
+  respondJoinRequest(input:{
+    requestId: 304,
+    action: "accept"
+  }){
+    id,
+    status,
+    role,
+    user {
+      id,
+      name,
+      email
+    },
+    requestedAt,
+    respondedAt
+  }
+}
+ 
+query showReadingCircleMembers{
+  readingCircleMembers(circleId: 22){
+    id,
+    user{
+      name,
+      email
+    },
+    role,
+    status
+  }
+}
+
+mutation deleteReadingCircleMember{
+  deleteReadingCircleMember(memberId: 304)
+}
