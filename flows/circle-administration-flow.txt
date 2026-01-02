@@ -142,3 +142,22 @@ mutation changeMemberRole{
     role: COORDINATOR
   )
 }
+
+
+query showMyCircles{
+  myCircles{
+    name
+    description
+    id
+  }
+}
+
+mutation updateReadingCircle{
+  updateReadingCircle(
+    input:{
+      id: 22,
+      name: "A new name",
+      description: "A new description"
+    }
+  )
+}
