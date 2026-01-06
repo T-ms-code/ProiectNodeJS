@@ -30,6 +30,13 @@ const createReadingCircle = {
         { transaction: t }
       )
 
+      await db.Chat.create(
+        {
+          circleId: circle.id
+        },
+        { transaction: t }
+      )
+
       return circle
     })
   },

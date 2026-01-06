@@ -13,6 +13,9 @@ const deleteReadingCircleMember = require("../mutations/DeleteReadingCircleMembe
 const updateReadingCircleMemberRole = require("../mutations/UpdateReadingCircleMemberRoleMutation")
 
 const updateReadingCircle = require("../mutations/UpdateReadingCircleMutation");
+const sendMessage = require("../mutations/SendMessageMutation")
+const updateMessage = require("../mutations/UpdateMessageMutation")
+const deleteMessage = require("../mutations/DeleteMessageMutation")
 
 const MutationType = new GraphQLObjectType({
   name: "Mutation",
@@ -27,7 +30,10 @@ const MutationType = new GraphQLObjectType({
     respondJoinRequest,
     deleteReadingCircleMember,
     updateReadingCircleMemberRole,
-    updateReadingCircle
+    updateReadingCircle,
+    sendMessage,
+    updateMessage,
+    deleteMessage
   },
 })
 
