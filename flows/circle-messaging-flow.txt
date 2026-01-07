@@ -1,0 +1,157 @@
+A user logs in or registers, joins a reading circle, sends messages in the circle chat, retrieves
+messages with pagination (updates one of their messages, and eventually deletes it - TODO).
+
+The application uses JWT authentication with role-based access control,
+nested GraphQL types (e.g. UserType nested inside CircleMemberType nested inside MessageType),
+and supports pagination and partial updates.
+
+
+mutation loginOwner{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation sendMessage{
+  sendMessage(input:{
+    circleId: 30,
+    content: "Hello!"
+  }){
+    id
+    content
+    createdAt
+    member{
+      role
+      user{
+        id
+        name
+        email
+      }
+    }
+  }
+}
+
+query getCircleMessages{
+  circleMessages(circleId: 30, page: 1, pageSize: 5){
+    id
+    content
+    createdAt
+    member{
+      role
+      user{
+        id
+        name
+      }
+    }
+  }
+}
+
+mutation updateMessage{
+  updateMessage(input:{
+    messageId: 406,
+    content: "Edited"
+  }){
+    id
+    content
+    updatedAt
+  }
+}
+
+
+query getCircleMessagesAfterUpdate{
+  circleMessages(circleId: 30, page: 1, pageSize: 5){
+    id
+    content
+    updatedAt
+  }
+}
+
+
+mutation loginAnotherUser{
+  login(input:{
+    name: "John Doe",
+    password: "password123"
+  }){
+    ... on LoggedInUserType{
+      id,
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation sendMessage{
+  sendMessage(input:{ circleId: 30, content: "test 3.0" }) {
+    id
+    content
+    createdAt
+    member {
+      id
+      role
+      user { id name }
+    }
+  }
+}
+
+query circleMessages{
+  circleMessages(circleId: 30, page: 1, pageSize: 20) {
+    id
+    content
+    createdAt
+    member {
+      role
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+}
+
+mutation deleteMessage{
+  deleteMessage(messageId: 405)
+}
+
+mutation sendAnotherMessage{
+  sendMessage(input:{ circleId: 30, content: "I HATE THIS BOOK" }) {
+    id
+    content
+    createdAt
+    member {
+      id
+      role
+      user { id name }
+    }
+  }
+}
+
+mutation loginOwnerAgain{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation deleteMessage{
+  deleteMessage(messageId: 406)
+}

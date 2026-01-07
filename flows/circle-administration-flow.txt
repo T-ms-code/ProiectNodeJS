@@ -4,11 +4,11 @@ The ADMIN can:
 - remove members from the circle
 - change members' roles
 - edit the circle name and description
-- delete messages (to be implemented)
+- delete messages
 
 The MODERATOR can:
 - edit the circle description
-- delete messages (to be implemented)
+- delete non-admin messages
 
 
 
