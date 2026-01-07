@@ -6,7 +6,7 @@ nested GraphQL types (e.g. UserType nested inside CircleMemberType nested inside
 and supports pagination and partial updates.
 
 
-mutation loginUser{
+mutation loginOwner{
   login(input:{
     name: "Mike Tyson",
     password: "password"
@@ -24,7 +24,7 @@ mutation loginUser{
 mutation sendMessage{
   sendMessage(input:{
     circleId: 30,
-    content: "Salut! Ce citim luna asta?"
+    content: "Hello!"
   }){
     id
     content
@@ -58,7 +58,7 @@ query getCircleMessages{
 mutation updateMessage{
   updateMessage(input:{
     messageId: 406,
-    content: "Editat"
+    content: "Edited"
   }){
     id
     content
@@ -122,4 +122,36 @@ query circleMessages{
 
 mutation deleteMessage{
   deleteMessage(messageId: 405)
+}
+
+mutation sendAnotherMessage{
+  sendMessage(input:{ circleId: 30, content: "I HATE THIS BOOK" }) {
+    id
+    content
+    createdAt
+    member {
+      id
+      role
+      user { id name }
+    }
+  }
+}
+
+mutation loginOwnerAgain{
+  login(input:{
+    name: "Mike Tyson",
+    password: "password"
+  }){
+    ... on LoggedInUserType{
+      id
+      token
+    }
+    ... on FailedAuthenticationType{
+      reason
+    }
+  }
+}
+
+mutation deleteMessage{
+  deleteMessage(messageId: 406)
 }

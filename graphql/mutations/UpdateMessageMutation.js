@@ -1,10 +1,9 @@
 const { GraphQLError } = require("graphql")
 const UpdateMessageInputType = require("../InputTypes/UpdateMessageInputType")
-const MessageType = require("../types/MessageType")
 const db = require("../../models")
 
 const updateMessage = {
-  type: () => MessageType,
+  type: require("../types/MessageType"),
   args: { input: { type: UpdateMessageInputType } },
   resolve: async (_, { input }, { user }) => {
     if (!user) throw new GraphQLError("UNAUTHENTICATED")

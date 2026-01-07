@@ -18,8 +18,6 @@ const deleteMessage = {
     const chat = await db.Chat.findByPk(msg.chatId)
     if (!chat) throw new GraphQLError("Chat not found")
 
-    const isAuthor = member.userId === user.id
-
     const myMember = await db.CircleMember.findOne({
       where: {
         userId: user.id,
@@ -27,10 +25,25 @@ const deleteMessage = {
         status: "accepted",
       },
     })
-    const isAdmin = myMember?.circleRole === "admin"
-    const isModerator = myMember?.circleRole === "moderator"
+    
+    const isAuthor = member.userId === user.id
 
-    if (!isAuthor && !isAdmin && !isModerator) throw new GraphQLError("FORBIDDEN")
+    const requesterRole = myMember?.circleRole
+    const authorRole = member.circleRole
+
+    const isAdmin = requesterRole === "admin"
+    const isModerator = requesterRole === "moderator"
+
+    // - the author can delete
+    // - the admin can delete any message
+    // - the moderator can delete only non-admin messages
+
+    const canDelete =
+      isAuthor ||
+      isAdmin ||
+      (isModerator && authorRole !== "admin")
+
+    if (!canDelete) throw new GraphQLError("FORBIDDEN")
 
     await msg.destroy()
     return true
