@@ -191,3 +191,12 @@ mutation updateReadingCircle{
     description
   }
 }
+
+
+mutation dissolveReadingCircleMutation{
+  dissolveReadingCircle(circleId: 22)
+}
+
+mutation exitReadingCircleMutation{
+  exitReadingCircle(circleId: 22)
+}
