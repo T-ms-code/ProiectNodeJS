@@ -6,7 +6,7 @@ const db = require("../models");
 const jwtMiddleware =async (request, response, next) => {
     const authorizationHeader = request.headers.authorization;
     if(!authorizationHeader){
-        console.log("No token found");
+        //console.log("No token found");
         next();//If no token, just continue without user data. Some resolvers might not need authentication.
         return;
     }
@@ -19,7 +19,7 @@ const jwtMiddleware =async (request, response, next) => {
     request.userData = user;
     }
     catch(e){
-        console.log("Invalid token!");
+        //console.log("Invalid token!");
     }
     next();
 }

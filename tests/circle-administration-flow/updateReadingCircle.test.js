@@ -161,21 +161,6 @@ describe("updateReadingCircle mutation tests (happy + sad path)", ()=>{
         expect(res.body.errors[0].message).toBe("CIRCLE_NOT_FOUND");
     });
 
-    test("SAD: fails if circle does not exist", async () => {
-        const res = await graphqlRequest(
-            UPDATE_READING_CIRCLE_MUTATION,
-            {
-            input: {
-                id: 99999,
-                name: "New Name",
-            },
-            },
-            tokenReadingCircleAdmin
-        );
-
-        expect(res.body.errors[0].message).toBe("CIRCLE_NOT_FOUND");
-    });
-
     test("SAD: fails if no fields are provided", async () => {
         const res = await graphqlRequest(
             UPDATE_READING_CIRCLE_MUTATION,

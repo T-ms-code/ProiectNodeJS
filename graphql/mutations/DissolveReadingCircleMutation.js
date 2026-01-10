@@ -19,10 +19,21 @@ const dissolveReadingCircleMutation = {
         const isAdmin = await isCircleAdmin(user.id, circleId);
         if (!isAdmin) throw new GraphQLError("FORBIDDEN");
 
-        await db.ReadingCircle.destroy({where: {id: circleId}});
+        await db.sequelize.query('PRAGMA foreign_keys = OFF');
+
+        try {
+            await db.CircleMember.destroy({ where: { circleId } });
+            
+            await db.ReadingCircle.destroy({ where: { id: circleId } });
+
+        } catch (error) {
+            throw error;
+        } finally {
+            await db.sequelize.query('PRAGMA foreign_keys = ON');
+        }
 
         return `Reading circle with id ${circleId} has been dissolved.`;
-    }
+        }
 }
 
 module.exports = dissolveReadingCircleMutation;

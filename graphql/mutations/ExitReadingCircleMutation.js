@@ -17,7 +17,7 @@ const exitReadingCircleMutation = {
         if (!circle) throw new GraphQLError("CIRCLE_NOT_FOUND");
 
         const member = await db.CircleMember.findOne({where: {circleId, userId: user.id}});
-        if (!member) throw new GraphQLError("FORBIDDEN");
+        if (!member) throw new GraphQLError(`You are not a member of the reading circle with id: ${circleId}`);
 
         const isAdmin = await isCircleAdmin(user.id, circleId);
         if (isAdmin) throw new GraphQLError("You cannot exit the reading circle because you are the ADMIN! But you can dissolve the reading circle.");
