@@ -40,7 +40,6 @@ describe("Login mutation (happy + sad)", () => {
       name: "Mike Tyson",
       password: "wrongpassword",
     })
-    // many GraphQL auth flows return 200 with an auth union indicating failure
     expect(res.status).toBe(200)
     expect(res.body.data.login).toBeDefined()
     expect(res.body.data.login.reason).toBeDefined()

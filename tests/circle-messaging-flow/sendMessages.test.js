@@ -1,5 +1,5 @@
-const { gql } = require("./helpers/gql")
-const db = require("../models")
+const { gql } = require("../helpers/gql")
+const db = require("../../models")
 const bcrypt = require("bcrypt")
 
 describe("Messages tests (happy + sad path)", () => {
